@@ -3,10 +3,13 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
-const { connection } = require("./src/controller/Connection");
 const { DbConnection } = require("./DbConnection");
+const router = require("./src/routes/auth");
+const { connection } = require("./src/controller/SocketConnection");
 
 const app = express();
+app.use(express.json());
+app.use("/auth", router);
 
 const server = http.createServer(app);
 const io = new Server(server, {

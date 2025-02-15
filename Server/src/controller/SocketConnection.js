@@ -1,35 +1,32 @@
-const { Chat } = require("../models/Chat");
+const { Chat } = require("../modal/Chat");
 
 const connection = (socket, io) => {
-  console.log(`✅ Authenticated user: ${username}`);
 
   socket.on("joinRoom", async (data) => {
+    data = JSON.parse(data);
     try {
-      data = JSON.parse(data);
-      const { room } = data;
+      const { room,username } = data;
       if (!room) {
-        console.log("❌ Room not provided");
+        console.log(" Room not provided");
         return;
       }
-
       socket.join(room);
-      console.log(`✅ ${username} joined room: ${room}`);
+      console.log(` ${username} joined room: ${room}`);
 
       // Fetch chat history
       const chatHistory = await Chat.find({ room }).sort({ timestamp: 1 });
       socket.emit("PrevMessages", chatHistory);
     } catch (error) {
-      console.log("Error in joinRoom:", error);
+      console.log(" Error in joinRoom:", error);
     }
   });
 
   socket.on("chatMessage", async (data) => {
     try {
-      data = JSON.parse(data);
-      const { room, message } = data;
+      const { room, message,username } = data;
 
       if (!room || !message) {
-        console.log("No message or Room");
+        console.log(" Missing room or message");
         return;
       }
 
@@ -38,12 +35,12 @@ const connection = (socket, io) => {
 
       io.to(room).emit("chatMessage", newMessage);
     } catch (error) {
-      console.log("Error in chatMessage:", error);
+      console.log(" Error in chatMessage:", error);
     }
   });
 
   socket.on("disconnect", () => {
-    console.log(`User ${username} disconnected`);
+    console.log(` User disconnected`);
   });
 };
 
