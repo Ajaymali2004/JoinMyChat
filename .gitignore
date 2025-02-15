@@ -1,0 +1,15 @@
+# Ignore node_modules (for Node.js projects)
+node_modules/
+
+# Ignore environment variables
+.env
+
+# Ignore build and cache files
+dist/
+build/
+.cache/
+
+# Ignore IDE/editor-specific files
+.vscode/
+.idea/
+*.swp
