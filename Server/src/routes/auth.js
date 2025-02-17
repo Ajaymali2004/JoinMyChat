@@ -6,5 +6,4 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 router.get("/verification", verifyToken);
-router.post("/forget",forgetPass);
 module.exports = router;

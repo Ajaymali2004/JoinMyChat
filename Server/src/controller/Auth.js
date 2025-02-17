@@ -33,7 +33,7 @@ const login = async (req, res) => {
     return res.status(400).json({ error: "All fields required" });
 
   const user = await User.findOne({ username });
-  if (!user) return res.status(400).json({ error: "Invalid credentials" });
+  if (!user) return res.status(400).json({ error: "No user exist with this name" });
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
@@ -59,34 +59,5 @@ const verifyToken = (req, res) => {
     return res.status(403).json({ error: "Invalid or expired token" });
   }
 };
-const forgetPass = async (req, res) => {
-  try {
-    const { username, oldPassword, newPassword } = req.body;
-    if (!username || !oldPassword || !newPassword) {
-      return res.status(400).json({ error: "All fields are required" });
-    }
 
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    // Verify old password
-    const isMatch = await bcrypt.compare(oldPassword, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ error: "Incorrect old password" });
-    }
-
-    // Update the password in the database
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashedPassword;
-    await user.save();
-
-    res.json({ message: "Password updated successfully" });
-  } catch (err) {
-    console.error("Error updating password:", err);
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
-module.exports = { register, login, verifyToken, forgetPass };
+module.exports = { register, login, verifyToken };
