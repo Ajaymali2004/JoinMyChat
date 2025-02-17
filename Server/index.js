@@ -6,10 +6,14 @@ const cors = require("cors");
 const { DbConnection } = require("./DbConnection");
 const router = require("./src/routes/auth");
 const { connection } = require("./src/controller/SocketConnection");
+const room = require("./src/routes/rooms");
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 app.use("/auth", router);
+app.use("/rooms",room);
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -18,9 +22,6 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
-app.use(cors());
-app.use(express.json());
 
 DbConnection();
 // NeW Socket connecting...

@@ -3,17 +3,13 @@ const { Chat } = require("../modal/Chat");
 const connection = (socket, io) => {
 
   socket.on("joinRoom", async (data) => {
-    data = JSON.parse(data);
+    const {room , username} = data;
     try {
-      const { room,username } = data;
       if (!room) {
         console.log(" Room not provided");
         return;
       }
       socket.join(room);
-      console.log(` ${username} joined room: ${room}`);
-
-      // Fetch chat history
       const chatHistory = await Chat.find({ room }).sort({ timestamp: 1 });
       socket.emit("PrevMessages", chatHistory);
     } catch (error) {
