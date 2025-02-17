@@ -1,0 +1,71 @@
+.home-container {
+  height: 100vh;
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+
+
+.login-alert-container {
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 400px;
+  margin-top: 20px;
+  animation: popUp 0.8s ease-in-out;
+}
+
+.custom-btn {
+  font-size: 1.2rem;
+  padding: 12px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.custom-btn.success {
+  background: #28a745;
+  border: none;
+  color: white;
+}
+
+.custom-btn.primary {
+  /* background: #007bff; */
+  border: none;
+  color: white;
+}
+
+.custom-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  font-size: 1.5rem;
+}
+
+@keyframes popUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
